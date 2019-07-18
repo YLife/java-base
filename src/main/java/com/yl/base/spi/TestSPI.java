@@ -10,6 +10,7 @@ public class TestSPI {
         Iterator<Person> iterator = loader.iterator();
         while (iterator.hasNext()) {
             Person person = iterator.next();
+            System.out.println(person.getClass().getClassLoader());
             person.sayHello();
         }
     }
