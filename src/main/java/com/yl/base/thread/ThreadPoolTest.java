@@ -13,7 +13,7 @@ public class ThreadPoolTest {
     private static ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(3);
 
     public static void testCachedThreadPool() throws InterruptedException {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             Thread.sleep(1000);
             final int index = i;
             cachedThreadPool.execute(new Runnable() {
@@ -26,7 +26,7 @@ public class ThreadPoolTest {
     }
 
     public static void testNewFiexedThreadPool() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             final int index = i;
             fixedThreadPool.execute(new Runnable() {
                 @Override
@@ -79,12 +79,12 @@ public class ThreadPoolTest {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Test cachedThread...");
-        //ThreadPoolTest.testCachedThreadPool();
+        ThreadPoolTest.testCachedThreadPool();
         System.out.println("Test fixedThreadPool...");
         //ThreadPoolTest.testNewFiexedThreadPool();
         System.out.println("Test singleThreadPool...");
         //ThreadPoolTest.testSingleThreadPool();
         System.out.println("Test scheduledThreadPool...");
-        ThreadPoolTest.testScheduledThreadPool(false);
+        //ThreadPoolTest.testScheduledThreadPool(false);
     }
 }
