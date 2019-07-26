@@ -12,6 +12,7 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
     private Session session;
     private Destination destination;
     private MessageConsumer consumer;
+    private TopicSubscriber subscriber;
 
     @Override
     public void establishConnection() throws Exception {
@@ -20,8 +21,10 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
                 , ActiveMQConnectionFactory.DEFAULT_PASSWORD
                 , ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
         connection = connectionFactory.createConnection();
+        connection.setClientID("007");
         connection.start();
         session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
+        //session = connection.createSession(Boolean.FALSE, Session.CLIENT_ACKNOWLEDGE);
     }
 
     @Override
@@ -33,9 +36,15 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
 
     @Override
     protected void consumeMessageByPS() throws Exception {
+        //destination = session.createTopic("ActiveTopic");
         destination = session.createTopic("ActiveTopic");
         consumer = session.createConsumer(destination);
         receiveMessage();
+    }
+
+    private void consumeMessageByListener() throws Exception{
+        subscriber = session.createDurableSubscriber(session.createTopic("ActiveTopic"), "test-durable");
+        subscriber.setMessageListener(new JMSListener());
     }
 
     private void receiveMessage() throws Exception {
@@ -55,12 +64,13 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
         ActiveMQConsumer consumer = new ActiveMQConsumer();
         try {
             consumer.establishConnection();
-            //consumer.consumeMessage("P2P");
-            consumer.consumeMessage("PS");
+            consumer.consumeMessage("P2P");
+            //consumer.consumeMessage("PS");
+            //consumer.consumeMessageByListener();
         } finally {
-            consumer.session.close();
-            consumer.connection.stop();
-            consumer.connection.close();
+            //consumer.session.close();
+            //consumer.connection.stop();
+            //consumer.connection.close();
         }
     }
 }
