@@ -28,6 +28,7 @@ public class ActiveMQProvider extends AbstractJMSProvider {
     protected void produceMessageByP2P() throws Exception {
         destination = session.createQueue("ActiveQuene");
         producer = session.createProducer(destination);
+        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
         producerMessage("Quene");
     }
 
@@ -46,18 +47,15 @@ public class ActiveMQProvider extends AbstractJMSProvider {
             session.commit();
             Thread.sleep(1000L);
         }
+        this.session.close();
+        this.connection.stop();
+        this.connection.close();
     }
 
     public static void main(String[] args) throws Exception {
         ActiveMQProvider provider = new ActiveMQProvider();
-        try {
-            provider.establishConnection();
-            //provider.produceMessage("P2P");
-            provider.produceMessage("PS");
-        } finally {
-            provider.session.close();
-            provider.connection.stop();
-            provider.connection.close();
-        }
+        provider.establishConnection();
+        provider.produceMessage("P2P");
+        provider.produceMessage("PS");
     }
 }
