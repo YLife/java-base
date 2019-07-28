@@ -23,7 +23,7 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
         connection = connectionFactory.createConnection();
         connection.setClientID("007");
         connection.start();
-        session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
+        session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
         //session = connection.createSession(Boolean.FALSE, Session.CLIENT_ACKNOWLEDGE);
     }
 
@@ -36,7 +36,6 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
 
     @Override
     protected void consumeMessageByPS() throws Exception {
-        //destination = session.createTopic("ActiveTopic");
         destination = session.createTopic("ActiveTopic");
         consumer = session.createConsumer(destination);
         receiveMessage();
@@ -55,7 +54,7 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
                 Thread.sleep(1000L);
                 continue;
             }
-            session.commit();
+            //session.commit();
             System.out.println("收到消息：" + message.getText());
         }
     }
