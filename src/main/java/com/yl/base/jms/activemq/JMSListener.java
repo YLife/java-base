@@ -32,4 +32,10 @@ public class JMSListener implements MessageListener {
             }
         }
     }
+
+    public static void main(String[] args) throws Exception {
+        ActiveMQConsumer consumer = new ActiveMQConsumer();
+        consumer.establishConnection();
+        consumer.consumeMessageByP2P();
+    }
 }

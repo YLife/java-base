@@ -21,9 +21,9 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
                 , ActiveMQConnectionFactory.DEFAULT_PASSWORD
                 , ActiveMQConnectionFactory.DEFAULT_BROKER_URL);
         connection = connectionFactory.createConnection();
-        connection.setClientID("007");
+        //connection.setClientID("007");
         connection.start();
-        session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
+        session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
         //session = connection.createSession(Boolean.FALSE, Session.CLIENT_ACKNOWLEDGE);
     }
 
@@ -54,7 +54,7 @@ public class ActiveMQConsumer extends AbstractJMSConsumer {
                 Thread.sleep(1000L);
                 continue;
             }
-            //session.commit();
+            session.commit();
             System.out.println("收到消息：" + message.getText());
         }
     }
