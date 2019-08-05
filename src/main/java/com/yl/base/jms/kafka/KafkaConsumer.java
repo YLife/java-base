@@ -7,21 +7,7 @@ import com.yl.base.jms.AbstractJMSConsumer;
  * @description: kafka consumer test
  * @date 2019/8/4 23:32
  */
-public class KafkaConsumer extends AbstractJMSConsumer {
+public class KafkaConsumer{
 
-    @Override
-    public void establishConnection() throws Exception {
-
-    }
-
-    @Override
-    protected void consumeMessageByP2P() throws Exception {
-
-    }
-
-    @Override
-    protected void consumeMessageByPS() throws Exception {
-
-    }
 
 }
